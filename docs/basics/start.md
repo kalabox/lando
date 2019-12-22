@@ -16,12 +16,17 @@ If you start an app with a new service or container it will need to pull that co
 ## Usage
 
 ```bash
+# Start your app
 lando start
+
+# Shut down any other running apps before starting this one
+lando start --only
 ```
 
 ## Options
 
 ```bash
+--only, -o     Shut down any other running apps before starting this one
 --clear        Clears the lando tasks cache
 --help         Shows lando or delegated command help if applicable
 --verbose, -v  Runs with extra verbosity

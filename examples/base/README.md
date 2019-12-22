@@ -137,6 +137,12 @@ docker ps --filter label=io.lando.container=TRUE -q | wc -l | grep 3
 lando poweroff
 docker ps --filter label=io.lando.container=TRUE -q | wc -l | grep 0
 
+# Should skip stopping lando base app
+lando start
+docker ps --filter label=io.lando.container=TRUE -q | wc -l | grep 3
+lando poweroff --exclude landobase
+docker ps --filter label=io.lando.container=TRUE -q | wc -l | grep 3
+
 # Should rebuild the services without errors
 lando rebuild -y
 docker ps --filter label=com.docker.compose.project=landobase | grep landobase_log_1
