@@ -73,7 +73,11 @@ const getRedisTooling = services => _(services)
 /*
  * Helper to get php related tooling commands
  */
-const getPhpTooling = (service = 'app') => ({composer: {service}, php: {service}});
+const getPhpTooling = (service = 'app') => ({
+  composer: {service},
+  php: {service},
+  psysh: {service},
+});
 
 /*
  * Helper to map lagoon type data to a lando service

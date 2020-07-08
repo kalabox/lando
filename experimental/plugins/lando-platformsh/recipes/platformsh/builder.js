@@ -55,6 +55,7 @@ module.exports = {
 
       // Add in the pull scripts
       options.tooling.pull = getPlatformPull(closestApp.name, options._app);
+
       // Add in relationship envvars
       options.tooling.pull.env = _(serviceTooling)
         // Get connect strings and merge with any env set by the command eg PG_PASS
