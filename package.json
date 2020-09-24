@@ -40,6 +40,7 @@
     "build:site": "vuepress build website -d _site",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "generate-tests": "leia \"examples/**/README.md\" test -r 2 -s 'Start up tests' -t 'Verification commands' -c 'Destroy tests' --split-file",
+    "delete-generated-tests": "rm -rf test/*.func.js test/split-file.txt",
     "lint": "eslint --quiet --no-ignore api bin experimental integrations lib plugins scripts test metrics",
     "lint:sites": "eslint  --quiet --ext .js,.vue --config .eslintrc.vuepress.json blog/.vuepress docs/.vuepress events/.vuepress website/.vuepress",
     "pkg:cli": "node ./scripts/pkg.js",

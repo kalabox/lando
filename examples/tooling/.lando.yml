@@ -55,6 +55,17 @@ tooling:
           message: What is the word?
           default: bird
           weight: 600
+  tooling-script:
+    service: web
+    cmd: /app/tooling-script.sh
+    level: app
+    options:
+      word:
+        passthrough: true
+        alias:
+          - w
+        default: bird
+        describe: Print what the word is
   dynamic:
     cmd: env
     service: :service

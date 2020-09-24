@@ -236,6 +236,34 @@ lando word
 lando word --word=fox
 ```
 
+## Option processing
+
+It is possible to disable Lando option processing for tooling by passing `--` immediately after `lando`. This is
+particularly useful when lando arguments like `-v` and `--verbose` need to be passed directly to the relevant tooling
+rather than `lando`.
+
+Using the following tooling for example:
+
+```yaml
+tooling:
+  drush:
+    cmd: "/app/vendor/bin/drush --root=/app/web"
+```
+
+```bash
+# This will enable verbose mode in just the drush tooling rather than lando, then
+# execute '/app/vendor/bin/drush --root=/app/web status -vvv' internally.
+lando -- drush status -vvv
+
+# This will enable verbose mode in both drush and lando, then
+# execute '/app/vendor/bin/drush --root=/app/web status -vvv' internally.
+lando drush status -vvv
+
+# This will enable verbose mode in both drush and lando and
+# execute '/app/vendor/bin/drush --root=/app/web -vvv -- status' internally.
+lando drush -vvv -- status
+```
+
 ## Overriding
 
 You can override tooling provided by Lando recipes or upstream Landofiles by redefining the tooling command in your Landofile.

@@ -69,6 +69,13 @@ lando cmdsub | grep /app/README.md
 
 # Should be able to run bash oneliners
 lando oneliner | grep HOLLA
+
+# Should be able to handle option processing properly.
+lando tooling-script --word=dog --verbose arg1 arg2 | grep "loading app lando-tooling"
+lando -- tooling-script --word=dog --verbose arg1 arg2 | grep "loading app lando-tooling" || echo $? | grep 1
+lando tooling-script --word=dog arg1 arg2 | grep "WORD=dog args=2: arg1 arg2"
+lando tooling-script -- --word=dog arg1 arg2 | grep "WORD=bird args=3: --word=dog arg1 arg2"
+lando -- tooling-script --word=dog -- arg1 -- arg3 | grep "WORD=dog args=3: arg1 -- arg3"
 ```
 
 Destroy tests

@@ -77,12 +77,16 @@ const handleDynamic = (config, options = {}, answers = {}) => {
  * Helper to process args
  *
  * We assume pass through commands so let's use argv directly and strip out
- * the first three assuming they are [node, lando.js, options.name]'
+ * the first three assuming they are [node, lando.js, options.name]'.
+ * If the third argument is a '--', e.g. [node, lando.js, --, options.name],
+ * then the first four arguments are stripped out instead.
  * Check to see if we have global lando opts and remove them if we do
  */
 const handleOpts = (config, argopts = []) => {
-  // Append any user specificed opts
-  argopts = argopts.concat(process.argv.slice(3));
+  // Fetch the argument processor index.
+  const index = process.argv.length > 3 && process.argv[2] === '--' ? 4 : 3;
+  // Append any user specified opts
+  argopts = argopts.concat(process.argv.slice(index));
   // If we have no args then just return right away
   if (_.isEmpty(argopts)) return config;
   // If this is not a CLI then we can pass right back
