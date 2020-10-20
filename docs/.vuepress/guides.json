@@ -74,7 +74,8 @@
     "children": [
       "how-can-i-pull-sync-my-database-on-lamp-y-recipes",
       "installing-node-in-your-lando-php-service",
-      "installing-php-extensions-on-lando"
+      "installing-php-extensions-on-lando",
+      "using-blackfire-io-with-lando"
     ]
   },
   {

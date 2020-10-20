@@ -177,3 +177,15 @@
   title: Contributor
   pic: 'https://www.gravatar.com/avatar/40de3d779ce34fd170031d018c005291'
   id: 8ada068efe4314fddce17d10a8139f3e1ae1afaf
+- name: James Austen
+  role:
+    - Code
+    - Documentation
+    - Guides and Tutorials
+  bio: Avid walker and Laravel developer. Founder of ge-tracker.com
+  location: 'Bristol, UK'
+  github: gtjamesa
+  twitter: getracker
+  title: Contributor
+  pic: 'https://www.gravatar.com/avatar/15f97966bceb0d3bfe5dd030317685cb'
+  id: 3ab09ee93624505c36cd219a6bc685a70fe66c7e
