@@ -1,4 +1,4 @@
-const fs = require('fs');
+ const fs = require('fs');
 const webpack = require('webpack');
 
 module.exports = {
@@ -143,6 +143,7 @@ module.exports = {
           collapsable: false,
           children: [
             'backdrop',
+            'craft',
             'drupal6',
             'drupal7',
             'drupal8',

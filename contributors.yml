@@ -177,3 +177,18 @@
   title: Contributor
   pic: 'https://www.gravatar.com/avatar/40de3d779ce34fd170031d018c005291'
   id: 8ada068efe4314fddce17d10a8139f3e1ae1afaf
+- name: Dan Hoban
+  role:
+    - Code
+    - Content
+    - Documentation
+    - Guides and Tutorials
+  bio: >-
+    Frustrated Dev, Product Manager, Scrum something or other, Craft CMS
+    prefered.
+  location: 'Brisbane, AU'
+  github: dwhoban
+  twitter: dwhoban
+  title: Contributor
+  pic: 'https://www.gravatar.com/avatar/4b176d9580cb9e66710d907614672552'
+  id: 966299425d59b104654ddd25bddcad3a2850ca1b

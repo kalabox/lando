@@ -35,6 +35,7 @@
 <h3 align="center">Recipes</h3>
 <p align="center">
   <a href="https://docs.lando.dev/config/backdrop.html">Backdrop</a> |
+  <a href="https://docs.lando.dev/config/craft.html">Craft CMS</a> |
   <a href="https://docs.lando.dev/config/drupal6.html">Drupal 6</a> |
   <a href="https://docs.lando.dev/config/drupal7.html">Drupal 7</a> |
   <a href="https://docs.lando.dev/config/drupal8.html">Drupal 8</a> |
