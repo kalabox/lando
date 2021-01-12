@@ -11,7 +11,7 @@ chai.use(require('sinon-chai'));
 chai.use(require('chai-as-promised'));
 chai.should();
 
-const Github = require('github');
+const {Octokit} = require('@octokit/rest');
 const Promise = require('../lib/promise');
 
 const UpdateManager = require('./../lib/updates');
@@ -65,13 +65,13 @@ describe('updates', () => {
 
   describe('#refresh', () => {
     // We need a Github API Client to stub.
-    const github = new Github({Promise: Promise});
+    const github = new Octokit();
     // Use our stubbed Github API so we don't make a real HTTP request.
     updates.githubApi = github;
 
     it('should use current or specified version of there is an error getting updated data', () => {
       // Throw an error on purpose
-      const stub = sinon.stub(updates.githubApi.repos, 'getReleases').rejects('Whoops!');
+      const stub = sinon.stub(github.repos, 'listReleases').rejects('Whoops!');
       // If something goes wrong with the Github API, handle it gracefully.
       return updates.refresh('vlolnotrealversion').should.eventually.be
         .an('object').with.property('version', 'lolnotrealversion')
@@ -97,7 +97,7 @@ describe('updates', () => {
           html_url: 'crashoverride',
         },
       ]};
-      const stub = sinon.stub(updates.githubApi.repos, 'getReleases').callsFake(() => Promise.resolve(mockReleaseData));
+      const stub = sinon.stub(github.repos, 'listReleases').callsFake(() => Promise.resolve(mockReleaseData));
       return updates.refresh('beta.2')
       .then(data => {
         data.should.be.an('object');

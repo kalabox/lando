@@ -3,13 +3,11 @@
 // Modules
 const _ = require('lodash');
 const fs = require('fs');
-const GitHubApi = require('github');
+const {Octokit} = require('@octokit/rest');
 const os = require('os');
 const path = require('path');
-const Promise = require('./../../../lib/promise');
+const inquirer = require('inquirer');
 
-// Github
-const github = new GitHubApi({Promise: Promise});
 const githubTokenCache = 'github.tokens';
 const gitHubLandoKey = 'github.lando.id_rsa';
 const gitHubLandoKeyComment = 'lando@' + os.hostname();
@@ -51,17 +49,18 @@ const parseTokens = tokens => _.flatten([getTokens(tokens), [{name: 'add or refr
 // Helper to post a github ssh key
 const postKey = (keyDir, token) => {
   // Auth
-  github.authenticate({type: 'token', token});
+  const github = new Octokit({
+    auth: token,
+  });
   // Post key
-  return github.users.createKey({
+  return github.users.createPublicSshKeyForAuthenticated({
     title: 'lando',
     key: _.trim(fs.readFileSync(path.join(keyDir, `${gitHubLandoKey}.pub`), 'utf8')),
   })
   // Catch key already in use error
   .catch(err => {
-    const message = JSON.parse(err.message);
     // Report error for everything else
-    if (_.has(message.errors, '[0].message') && message.errors[0].message !== 'key is already in use') {
+    if (_.has(err.errors, '[0].message') && err.errors[0].message !== 'key is already in use') {
       throw Error(throwError(err));
     }
   });
@@ -70,8 +69,11 @@ const postKey = (keyDir, token) => {
 // Helper to set caches
 const setCaches = (options, lando) => {
   // Get the github user
-  github.authenticate({type: 'token', token: options['github-auth']});
-  return github.users.get({})
+  const github = new Octokit({
+    auth: options['github-auth'],
+  });
+  // github.authenticate({type: 'token', token: options['github-auth']});
+  return github.users.getAuthenticated()
   .then(user => {
     // Reset this apps metacache
     const metaData = lando.cache.get(`${options.name}.meta.cache`) || {};
@@ -95,7 +97,9 @@ const getRepos = (answers, Promise) => {
   console.log('Getting your GitHub repos... this may take a moment if you have a lot');
   return new Promise((resolve, reject) => {
     // Authenticate
-    github.authenticate({type: 'token', token: answers['github-auth']});
+    const github = new Octokit({
+      auth: answers['github-auth'],
+    });
     // Get all our slguzz
     github.repos.getAll({affliation: 'owner,collaborator', per_page: 100}, getAllRepos(resolve, reject));
   });
@@ -112,6 +116,55 @@ const getAutoCompleteRepos = (answers, Promise, input = null) => {
     });
   };
 };
+
+const checkAndMaybeStar = (options, lando) => {
+  let octokit = new Octokit({
+    auth: options['github-auth'],
+  });
+  return inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'starOnGithub',
+      message: 'Would you like to star the Lando project on Github?',
+    },
+  ]).then( answers => {
+    if (answers.starOnGithub) {
+      // sweet, user has okayed staring Lando on github, so lets hook them up!
+      return octokit.activity.starRepoForAuthenticatedUser({owner: 'lando', repo: 'lando'})
+      .then( result => {
+        console.log(`lando/lando starred for you`);
+        lando.cache.set('promptedToStarOnGithub', true);
+      })
+      .catch(err => {
+        // fail silently, the user probably didn't give our token permissions.
+        });
+    }
+  }).catch(err => {
+    // just fail silently :/
+  });
+};
+
+const suggestStar = (options, lando) => {
+  let octokit;
+    const promptedToStarOnGithub = lando.cache.get('promptedToStarOnGithub');
+    if (typeof promptedToStarOnGithub === 'undefined' || ! promptedToStarOnGithub) {
+      octokit = new Octokit({
+        auth: options['github-auth'],
+      });
+      return octokit.activity.checkRepoIsStarredByAuthenticatedUser({
+        owner: 'lando',
+        repo: 'lando',
+      })
+      .then( result => {
+        if ( result.status === 204 || result.status === 304 ) {
+          // cool, user has starred the repo already.
+          lando.cache.set('promptedToStarOnGithub', true);
+        }
+      }).catch( err => {
+        return checkAndMaybeStar(options, lando);
+      });
+    }
+  };
 
 module.exports = {
   sources: [{
@@ -160,6 +213,7 @@ module.exports = {
       }},
       {name: 'reload-keys', cmd: '/helpers/load-keys.sh --silent', user: 'root'},
       {name: 'clone-repo', cmd: `/helpers/get-remote-url.sh ${options['github-repo']}`, remove: true},
+      {name: 'suggest-star', func: (options, lando) => suggestStar(options, lando)},
       {name: 'set-caches', func: (options, lando) => setCaches(options, lando)},
     ]),
   }],
