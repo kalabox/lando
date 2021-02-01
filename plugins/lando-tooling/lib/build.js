@@ -21,10 +21,10 @@ module.exports = (config, injected) => {
     // Build run objects
     .map(({command, service}) => utils.buildCommand(app, command, service, user, env, dir))
     // Try to run the task quickly first and then fallback to compose launch
-    .each(runner => utils.dockerExec(injected, stdio, runner).catch(execError => {
-      return injected.engine.isRunning(runner.id).then(isRunning => {
+    .each(command => utils.dockerExec(injected, stdio, command).catch(execError => {
+      return injected.engine.isRunning(command.dockerRunner.id).then(isRunning => {
         if (!isRunning) {
-          return injected.engine.run(runner).catch(composeError => {
+          return injected.engine.run(command.dockerRunner).catch(composeError => {
             composeError.hide = true;
             throw composeError;
           });

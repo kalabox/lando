@@ -191,3 +191,13 @@
   title: Contributor
   pic: 'https://www.gravatar.com/avatar/b497056d7679e425fdb3d6f7fca7d05b'
   id: a42fa56eb47d917eeb086338cdc37efb635bef51
+- name: xXCalleManXx
+  role:
+    - Code
+    - DevOps
+  bio: Crazy danish developer
+  location: 'Denmark, Aarhus'
+  github: xXCalleManXx
+  title: Contributor
+  pic: 'https://www.gravatar.com/avatar/902ac41a865b2dfa64d05533452db588'
+  id: 5bb74abc3d933e853e8e721ec643c42eaae3e236

@@ -253,6 +253,21 @@ lando word
 lando word --word=fox
 ```
 
+### Tooling outside container
+If you want to run a command on your host machine or combine multiple lando commands, you can do as following.
+```yml
+tooling:
+  host-path:
+    cmd: pwd
+    service: _host_
+  multi-lando-tooling:
+    cmd:
+      - _host_: lando host-path
+      - appserver: pwd
+```
+
+When service is `_host_` the command will be executed on the host machine instead of inside a container.
+
 ## Overriding
 
 You can override tooling provided by Lando recipes or upstream Landofiles by redefining the tooling command in your Landofile.

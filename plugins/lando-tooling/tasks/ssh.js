@@ -35,7 +35,7 @@ module.exports = lando => {
     if (app) {
       return app.init().then(() => {
         if (_.isNull(user)) user = getUser(service, app.info);
-        return lando.engine.run(utils.buildCommand(app, command, service, user)).catch(error => {
+        return lando.engine.run(utils.buildCommand(app, command, service, user).dockerRunner).catch(error => {
           error.hide = true;
           throw error;
         });

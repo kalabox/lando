@@ -6,6 +6,7 @@ const escape = require('./../../../lib/utils').shellEscape;
 const getUser = require('./../../../lib/utils').getUser;
 const getCliEnvironment = require('./../../../lib/utils').getCliEnvironment;
 const path = require('path');
+const Command = require('./../../../lib/command');
 
 /*
  * Helper to map the cwd on the host to the one in the container
@@ -109,31 +110,45 @@ const parseCommand = (cmd, service) => ({
 /*
  * Helper to build commands
  */
-exports.buildCommand = (app, command, service, user, env = {}, dir = undefined) => ({
-  id: `${app.project}_${service}_1`,
-  compose: app.compose,
-  project: app.project,
-  cmd: command,
-  opts: {
-    environment: getCliEnvironment(env),
-    mode: 'attach',
-    workdir: dir || getContainerPath(app.root),
-    user: (user === null) ? getUser(service, app.info) : user,
-    services: _.compact([service]),
-    hijack: false,
-    autoRemove: true,
-  },
-});
+exports.buildCommand = (app, command, service, user, env = {}, dir = undefined) => {
+  const dockerRunner = {
+    id: `${app.project}_${service}_1`,
+    compose: app.compose,
+    project: app.project,
+    cmd: command,
+    opts: {
+      environment: getCliEnvironment(env),
+      mode: 'attach',
+      workdir: dir || getContainerPath(app.root),
+      user: (user === null) ? getUser(service, app.info) : user,
+      services: _.compact([service]),
+      hijack: false,
+      autoRemove: true,
+    },
+  };
+
+  return new Command(app, service, command, dockerRunner);
+};
 
 /*
  * Helper to build docker exec command
  */
-exports.dockerExec = (injected, stdio, datum = {}) => {
+exports.dockerExec = (injected, stdio, command) => {
+  const datum = command.dockerRunner;
   // Depending on whether injected is the app or lando
   const dockerBin = injected.config.dockerBin || injected._config.dockerBin;
   const opts = {mode: 'attach', cstdio: stdio};
   // Run run run
-  return injected.shell.sh(getExecOpts(dockerBin, datum).concat(datum.cmd), opts);
+
+  let shOptions;
+
+  if (command.service === '_host_') {
+    shOptions = datum.cmd;
+  } else {
+    shOptions = getExecOpts(dockerBin, datum).concat(datum.cmd);
+  }
+
+  return injected.shell.sh(shOptions, opts);
 };
 
 /*
