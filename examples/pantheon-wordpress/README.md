@@ -43,7 +43,7 @@ lando wp eval "phpinfo();"
 cd wordpress
 lando wp cli version
 
-# Should use custom webroot when set in pantheon.yml
+# Should use custom webroot when set in pantheon.yml or pantheon.local.yml
 cd wordpress
 lando ssh -s appserver -c "curl -L http://appserver_nginx" | grep "WordPress for Lando"
 lando ssh -s appserver -c "curl -kL https://appserver_nginx" | grep "WordPress for Lando"
@@ -65,7 +65,7 @@ lando composer --version | grep Composer | grep 1.10.1
 cd wordpress
 lando terminus auth:whoami | grep landobot@devwithlando.io
 
-# Should use custom php version if set in pantheon.yml
+# Should use custom php version if set in pantheon.yml or pantheon.local.yml
 cd wordpress
 lando php -v | grep "PHP 7.3"
 

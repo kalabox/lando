@@ -39,7 +39,7 @@ Run the following commands to validate things are rolling as they should.
 cd drupal8
 lando drush status | grep "Connected"
 
-# Should use the drush in pantheon.yml
+# Should use the drush in pantheon.yml or pantheon.local.yml
 cd drupal8
 lando drush version | grep 10.
 

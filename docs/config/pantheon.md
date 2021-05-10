@@ -72,15 +72,22 @@ If you do not already have a [Landofile](./../config/lando.md) for your Pantheon
 
 Note that if the above config options are not enough, all Lando recipes can be further [extended and overriden](./../config/recipes.md#extending-and-overriding-recipes).
 
+### Using pantheon.local.yml
+
+If you would like to set different environment settings for your local Lando site vs the remote Pantheon site, you can create a `pantheon.local.yml` in the root of your repo, which will override / add to any settings in the `pantheon.yml` file.
+
+If you are using the same repo in multiple Lando environments (...with different Environment vars in `pantheon.local.yml`) then be sure to add the `pantheon.local.yml` file to your `.gitignore` file, and create a `pantheon.local.yml` in each environment's project folder
+
+
 ### Choosing a php version
 
-Lando will look for a [`pantheon.yml`](https://pantheon.io/docs/pantheon-yml/) (and/or `pantheon.upstream.yml`) in your app's root directory and use whatever `php_version` you've specified there.
+Lando will look for a [`pantheon.yml`](https://pantheon.io/docs/pantheon-yml/) (and/or `pantheon.upstream.yml` and/or `pantheon.local.yml`) in your app's root directory and use whatever `php_version` you've specified there.
 
 This means that **you can not configure the php version directly in your Landofile for this recipe.**
 
 If you change this version, make sure you [`lando rebuild`](./../cli/rebuild.md) for the changes to apply.
 
-**Example pantheon.yml**
+**Example pantheon.yml or pantheon.local.yml**
 
 ```yaml
 api_version: 1
@@ -89,7 +96,7 @@ php_version: 7.1
 
 ### Choosing a nested webroot
 
-Lando will look for a [`pantheon.yml`](https://pantheon.io/docs/pantheon-yml/) (and/or `pantheon.upstream.yml`) in your app's root directory and use whatever `web_docroot` you've specified there.
+Lando will look for a [`pantheon.yml`](https://pantheon.io/docs/pantheon-yml/) (and/or `pantheon.upstream.yml` and/or ` pantheon.local.yml`) in your app's root directory and use whatever `web_docroot` you've specified there.
 
 This means that **you cannot configure the webroot directly in your Landofile for this recipe.**
 
@@ -413,7 +420,7 @@ tika:
 
 ## Using Drush
 
-Lando will look for a [`pantheon.yml`](https://pantheon.io/docs/pantheon-yml/) (and/or `pantheon.upstream.yml`) in your app's root directory and will globally install whatever `drush_version` you've specified there. However, it will not go below Drush 8. This means that if you've specified Drush 5, Lando will still install Drush 8.
+Lando will look for a [`pantheon.yml`](https://pantheon.io/docs/pantheon-yml/) (and/or `pantheon.upstream.yml` and/or ` pantheon.local.yml`) in your app's root directory and will globally install whatever `drush_version` you've specified there. However, it will not go below Drush 8. This means that if you've specified Drush 5, Lando will still install Drush 8.
 
 If this has not been specified then we will globally install the [latest version of Drush 8](http://docs.drush.org/en/8.x/install/) unless you are running on `php 5.3` in which case we will install the [latest version of Drush 7](http://docs.drush.org/en/7.x/install/). For Backdrop sites, we will also install the latest version of [Backdrop Drush](https://github.com/backdrop-contrib/drush).
 
@@ -423,7 +430,7 @@ If you decide to list `drush` as a dependency in your project's `composer.json` 
 
 ### Configuring your root directory
 
-If you are using `web_docroot` in your `pantheon.yml`, you will need to remember to `cd` into that directory and run `lando drush` from there. This is because many site-specific `drush` commands will only run correctly if you run `drush` from a directory that also contains a Drupal site.
+If you are using `web_docroot` in your `pantheon.yml` or `pantheon.local.yml`, you will need to remember to `cd` into that directory and run `lando drush` from there. This is because many site-specific `drush` commands will only run correctly if you run `drush` from a directory that also contains a Drupal site.
 
 If you are annoyed by having to `cd` into that directory every time you run a `drush` command, you can get around it by [overriding](./../config/tooling.md#overriding) the `drush` tooling command in your [Landofile](./../config/lando.md) so that Drush always runs from your `webroot`.
 

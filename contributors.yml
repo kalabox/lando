@@ -198,3 +198,13 @@
   title: Contributor
   pic: 'https://www.gravatar.com/avatar/c335f31e62b453f747f39a84240b3bbd'
   id: 443e9ca6ae16555ec9d336447aaac3a944eebf5b
+- name: TerranD7
+  role:
+    - Code
+    - Documentation
+  bio: FullStack Developer PHP/JS
+  location: Canada
+  github: terrance-orletsky-d7
+  title: Contributor
+  pic: 'https://www.gravatar.com/avatar/3767a002bed1270307c748df5a35a478'
+  id: bcbe4a9e7a9e4ed1e42fcb181966adfbffd6cd5d

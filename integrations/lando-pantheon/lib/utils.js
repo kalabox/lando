@@ -155,7 +155,7 @@ exports.getPantheonCache = () => ({
 /*
  * Helper to merge in pantheon yamls
  */
-exports.getPantheonConfig = (files = ['pantheon.upstream.yml', 'pantheon.yml']) => _(files)
+exports.getPantheonConfig = (files = ['pantheon.upstream.yml', 'pantheon.yml', 'pantheon.local.yml']) => _(files)
   .filter(file => fs.existsSync(file))
   .map(file => yaml.safeLoad(fs.readFileSync(file)))
   .thru(data => _.merge({}, ...data))

@@ -93,6 +93,7 @@ module.exports = {
       options = _.merge({}, config, options, utils.getPantheonConfig([
         path.join(options.root, 'pantheon.upstream.yml'),
         path.join(options.root, 'pantheon.yml'),
+        path.join(options.root, 'pantheon.local.yml'),
       ]));
 
       // Normalize because 7.0 right away gets handled strangely by js-yaml

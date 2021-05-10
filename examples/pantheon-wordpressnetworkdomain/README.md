@@ -55,7 +55,7 @@ lando terminus -V
 cd wordpress
 lando terminus auth:whoami | grep landobot@devwithlando.io
 
-# Should use custom php version if set in pantheon.yml
+# Should use custom php version if set in pantheon.yml or pantheon.local.yml
 cd wordpress
 lando php -v | grep "PHP 7.3"
 
