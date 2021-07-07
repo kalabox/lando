@@ -84,6 +84,15 @@ config:
   composer_version: '1.10.1'
 ```
 
+And then update your tooling, so lando use your preferred version of composer:
+
+```yaml
+tooling:
+  composer:
+    service: appserver
+    cmd: '/usr/local/bin/php /usr/local/bin/composer'
+```
+
 ### Choosing a web server
 
 By default, this recipe will be served by the default version of our [apache](./apache.md) service but you can also switch this to use [`nginx`](./nginx.md). We *highly recommend* you check out both the [apache](./apache.md) and [nginx](./nginx.md) services before you change the default `via`.

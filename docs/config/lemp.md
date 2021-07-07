@@ -86,6 +86,15 @@ config:
   composer_version: '1.10.1'
 ```
 
+And then update your tooling, so lando use your preferred version of composer:
+
+```yaml
+tooling:
+  composer:
+    service: appserver
+    cmd: '/usr/local/bin/php /usr/local/bin/composer'
+```
+
 ### Choosing a database backend
 
 By default, this recipe will use the default version of our [mysql](./mysql.md) service as the database backend but you can also switch this to use [`mariadb`](./mariadb.md) or ['postgres'](./postgres.md) instead. Note that you can also specify a version *as long as it is a version available for use with lando* for either `mysql`, `mariadb` or `postgres`.
