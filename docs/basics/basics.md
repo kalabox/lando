@@ -92,6 +92,12 @@ There are various ways to craft your Landofile but we've found and observed a st
 6. Create [custom recipes or services](./../contrib/contrib-plugins.md) to lock down your new power tools.
 7. Rinse and repeat.
 
+## Note about comments
+
+If you want to comment out a line:  
+
+```# this is the line to be commented out - comments start with # symbol ```
+
 ## You have some examples?
 
 You can check out our [large repository of tested-every-build and working examples](https://github.com/lando/cli/tree/main/examples).  A few example Landofiles to help give you a sense of how simple or complex they can be is shown below:
