@@ -39,5 +39,12 @@ In the example above we set the variable to `appserver` and created a path mappi
 
 ![screenshot](/images/drush-xdebug-phpstorm.png)
 
+Depending on how you have configured Xdebug to be triggered (xdebug.start_with_request is off by default) 
+you will need to tell Xdebug to start debugging the request. You can do this by either setting that global
+option or by setting the following environment variable before running your request:
+```
+export XDEBUG_SESSION="PHPSTORM"
+```
+
 <GuideFooter />
 <Newsletter />
