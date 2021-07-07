@@ -284,8 +284,9 @@ if (getenv('LANDO')) {
   define('DB_HOST', 'database');
 
   /** URL routing (Optional, may not be necessary) */
-  // define('WP_HOME','http://mysite.lndo.site');
-  // define('WP_SITEURL','http://mysite.lndo.site');
+	// define('WP_HOME', $lando_info->appserver->urls[0]);
+	// define('WP_SITEURL', $lando_info->appserver->urls[0]);
+
 }
 ```
 
