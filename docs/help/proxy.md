@@ -19,11 +19,11 @@ If you think you may be in this situation there is a Lando driven mechanism you 
 
 ## Lando Environment Files
 
-You can make sure your containers are aware of any relevant proxies by using a [lando environment file](./../config/env.md) and setting your config there. Below is an example of the things you would want to set in this `env` file. You do not need to define both although that is preferred.
+You can make sure your containers are aware of any relevant proxies by using a [lando environment file](./../config/env.md) and setting your config there. Below is an example of the things you would want to set in this `env` file. You do not need to define both although that is preferred. Be aware, that environment variables are case sensitive in linux containers.
 
 ```bash
-HTTP_PROXY=http://my_proxy:80
-HTTPS_PROXY=https://my_proxy:443
+http_proxy=http://my_proxy:80
+https_proxy=https://my_proxy:443
 ```
 
 It is also a good practice to `.gitignore` the `env` file so you can set `proxy` settings that are relevant to you without forcing those settings on other users and environments.
