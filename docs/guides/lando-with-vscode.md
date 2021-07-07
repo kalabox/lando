@@ -70,7 +70,7 @@ xdebug.collect_params = 0
 xdebug.mode = debug
 xdebug.client_host = ${LANDO_HOST_IP}
 xdebug.client_port = 9003
-xdebug.start_with_request = trigger
+xdebug.start_with_request = yes
 ; xdebug.remote_connect_back = 1
 xdebug.log = /tmp/xdebug.log
 ```
