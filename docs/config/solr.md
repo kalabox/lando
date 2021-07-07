@@ -67,7 +67,7 @@ services:
     portforward: false
     core: lando
     config:
-      dir: SEE BELOW
+      conf: SEE BELOW
 ```
 
 ### Port forwarding
@@ -147,7 +147,7 @@ services:
   myservice:
     type: solr
     config:
-      dir: sites/all/modules/search_api_solr/solr-conf/7.x
+      conf: sites/all/modules/search_api_solr/solr-conf/7.x
 ```
 
 ## Getting information
